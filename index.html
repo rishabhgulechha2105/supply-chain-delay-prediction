@@ -1,1 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Supply Chain Delay Prediction & Logistics Risk Intelligence</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #ffffff;
+    color: #222;
+    line-height: 1.65;
+}
+
+/* HEADER */
+.header {
+    background: #111827;
+    color: white;
+    padding: 65px 20px;
+    text-align: center;
+}
+
+.header h1 {
+    max-width: 1000px;
+    margin: 0 auto 15px;
+    font-size: 42px;
+    line-height: 1.2;
+}
+
+.header p {
+    max-width: 850px;
+    margin: auto;
+    font-size: 18px;
+    color: #d1d5db;
+}
+
+/* NAVIGATION */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    padding: 13px;
+}
+
+.navbar a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #2563eb;
+}
+
+/* CONTENT */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px 25px 70px;
+}
+
+section {
+    margin-top: 55px;
+}
+
+h2 {
+    font-size: 30px;
+    color: #1d4ed8;
+    border-bottom: 2px solid #dbeafe;
+    padding-bottom: 8px;
+    margin-bottom: 25px;
+}
+
+h3 {
+    font-size: 22px;
+    color: #1e40af;
+    margin-top: 30px;
+}
+
+h4 {
+    font-size: 18px;
+    color: #374151;
+}
+
+p {
+    margin: 12px 0;
+}
+
+ul {
+    padding-left: 25px;
+}
+
+li {
+    margin: 8px 0;
+}
+
+/* CHECK MARK */
+.check {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+/* HIGHLIGHT */
+.highlight {
+    background: #eff6ff;
+    border-left: 5px solid #2563eb;
+    padding: 18px 22px;
+    margin: 20px 0;
+}
+
+/* DATASET CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 22px;
+    text-align: center;
+    background: #fafafa;
+}
+
+.card .number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.card .label {
+    color: #555;
+}
+
+/* TABLES */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+}
+
+th {
+    background: #1e3a8a;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    border: 1px solid #ddd;
+    padding: 11px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.best {
+    font-weight: bold;
+    color: #1d4ed8;
+}
+
+/* BAR CHART */
+.chart {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 25px 0;
+}
+
+.bar-row {
+    margin: 18px 0;
+}
+
+.bar-title {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.bar-background {
+    height: 18px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    background: #2563eb;
+}
+
+/* MODEL BOX */
+.model {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 22px;
+    margin: 20px 0;
+}
+
+/* RISK */
+.risk-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.risk {
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.risk-icon {
+    font-size: 30px;
+}
+
+/* CODE/WORKFLOW */
+.workflow {
+    background: #111827;
+    color: #e5e7eb;
+    padding: 25px;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-line;
+}
+
+/* REFERENCES */
+.reference {
+    border-left: 4px solid #2563eb;
+    background: #f8fafc;
+    padding: 15px 18px;
+    margin: 12px 0;
+}
+
+/* FOOTER */
+footer {
+    background: #111827;
+    color: #d1d5db;
+    text-align: center;
+    padding: 30px;
+}
+
+@media(max-width: 700px) {
+
+    .header h1 {
+        font-size: 30px;
+    }
+
+    .navbar a {
+        display: inline-block;
+        margin: 5px 7px;
+    }
+
+    .risk-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    table {
+        font-size: 13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>
+        🚚 Supply Chain Delay Prediction & Logistics Risk Intelligence
+    </h1>
+
+    <p>
+        Machine Learning Framework for Predicting Late Deliveries,
+        Identifying Delivery Risk and Providing Explainable Logistics Insights
+    </p>
+
+</div>
+
+
+<!-- NAVIGATION -->
+
+<div class="navbar">
+
+    <a href="#introduction">Introduction</a>
+    <a href="#dataset">Dataset</a>
+    <a href="#problem">Problem</a>
+    <a href="#methods">Methods</a>
+    <a href="#algorithms">Algorithms</a>
+    <a href="#results">Results</a>
+    <a href="#shap">SHAP</a>
+    <a href="#risk">Risk</a>
+    <a href="#conclusion">Conclusion</a>
+    <a href="#references">References</a>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- INTRODUCTION -->
+
+<section id="introduction">
+
+<h2>Introduction / Background</h2>
+
+<p>
+The applications of machine learning in supply chain analytics has
+gained significant momentum, offering logistics managers, analysts,
+and organizations actionable insights to improve operational
+efficiency.
+</p>
+
+<p>
+In supply chain management, understanding and optimizing delivery
+processes, shipment planning, and delivery risk is critical for
+customer satisfaction and business success. Traditional approaches
+often rely on historical analysis and manual judgements, which may
+lead to suboptimal decisions and delayed identification of high-risk
+shipments.
+</p>
+
+
+<h3>✅ Literature Review</h3>
+
+<ul>
+
+<li>
+Recent studies have applied machine learning techniques to address
+challenges in supply chain management, such as predicting delivery
+delays and optimizing shipment planning.
+</li>
+
+<li>
+Supervised learning techniques, including Logistic Regression,
+Random Forest and CatBoost have been used to predict late delivery
+risk using historical order, customer, product, shipping and
+geographical data.
+</li>
+
+<li>
+Explainable AI techniques, particularly SHAP, have been used to
+identify the key factors influencing delivery risk predictions and
+provide interpretable insights into individual shipments.
+</li>
+
+<li>
+These approaches help automate supply chain analysis, providing
+data-driven insights to identify high-risk deliveries, improve
+logistics planning and support better operational decisions.
+</li>
+
+</ul>
+
+</section>
+
+
+<!-- DATASET -->
+
+<section id="dataset">
+
+<h2>Dataset Description</h2>
+
+<p>
+The data is provided as a CSV file containing historical supply chain
+and order information from the DataCo Smart Supply Chain dataset.
+</p>
+
+<div class="cards">
+
+<div class="card">
+<div class="number">180,519</div>
+<div class="label">Historical Orders</div>
+</div>
+
+<div class="card">
+<div class="number">53</div>
+<div class="label">Original Features</div>
+</div>
+
+<div class="card">
+<div class="number">28</div>
+<div class="label">Selected Prediction Features</div>
+</div>
+
+<div class="card">
+<div class="number">54.83%</div>
+<div class="label">Overall Late-Delivery Rate</div>
+</div>
+
+</div>
+
+
+<h3>Order Data</h3>
+
+<p>
+Contains information about customer orders, including order type,
+quantity, discounts, prices, sales and order details.
+</p>
+
+
+<h3>Shipping Data</h3>
+
+<p>
+Includes shipping modes and scheduled shipping duration, which are
+important for predicting delivery delays.
+</p>
+
+
+<h3>Customer Data</h3>
+
+<p>
+Contains customer-related information such as customer segment,
+city, state and country.
+</p>
+
+
+<h3>Product Data</h3>
+
+<p>
+Provides details about products, categories, departments, product
+names and pricing information.
+</p>
+
+
+<h3>Geographic Data</h3>
+
+<p>
+Includes customer and order locations such as cities, states,
+countries, regions, markets, latitude and longitude.
+</p>
+
+
+<h3>Delivery Risk Data</h3>
+
+<p>
+The <strong>Late_delivery_risk</strong> variable serves as the target,
+indicating whether an order is likely to experience a late delivery.
+A value of <strong>1</strong> represents a late delivery and
+<strong>0</strong> represents an on-time delivery.
+</p>
+
+
+<p>
+The dataset contains <strong>180,519 historical orders</strong> and
+<strong>53 features</strong>, providing a comprehensive basis for
+developing and evaluating machine learning models for supply chain
+delay prediction.
+</p>
+
+
+<h3>✅ Dataset Link</h3>
+
+<p>
+<a href="https://www.kaggle.com/datasets/shashwatwork/dataco-smart-supply-chain-for-big-data-analysis"
+target="_blank">
+DataCo Smart Supply Chain Dataset — Kaggle
+</a>
+</p>
+
+</section>
+
+
+<!-- PROBLEM -->
+
+<section id="problem">
+
+<h2>Problem Definition</h2>
+
+<h3>✅ Problem</h3>
+
+<p>
+Supply chain operations involve various shipping methods, customers,
+products and delivery routes. However, predicting which orders are
+likely to be delivered late can be a very difficult task.
+</p>
+
+<p>
+Rather than using a data-driven approach to predict delivery risk,
+organizations may rely on historical analysis and subjective
+judgements that can lead to poor logistics planning and customer
+dissatisfaction.
+</p>
+
+
+<h3>✅ Motivation</h3>
+
+<p>
+Automating the analysis of supply chain orders to identify potential
+delivery delays can allow organizations to make better and more
+strategic operational decisions.
+</p>
+
+<p>
+Using machine learning models to predict late delivery risk and
+explain the factors influencing each prediction, this project
+provides insights to help organizations identify high-risk shipments,
+improve logistics planning and optimize delivery operations.
+</p>
+
+</section>
+
+
+<!-- METHODS -->
+
+<section id="methods">
+
+<h2>Methods</h2>
+
+<h3>Data Processing Methods</h3>
+
+
+<h4>1. Data Collection and Preparation</h4>
+
+<ul>
+
+<li>
+<strong>Data Source:</strong> Focused on the DataCo Smart Supply
+Chain dataset containing historical order and delivery information.
+</li>
+
+<li>
+<strong>Data Loading:</strong> Using Pandas, the CSV dataset
+containing 180,519 orders and 53 features was loaded.
+</li>
+
+<li>
+<strong>Data Cleaning:</strong> Performed data quality checks for
+missing values, duplicate records, and irrelevant or sensitive
+attributes before preparing the dataset for modelling.
+</li>
+
+<li>
+<strong>Feature Selection:</strong> Selected 28 relevant features
+that could be used to predict delivery risk while excluding
+post-outcome variables such as actual shipping duration, delivery
+status and the target variable.
+</li>
+
+</ul>
+
+
+<h4>2. Feature Engineering</h4>
+
+<ul>
+
+<li>
+<strong>Shipping Features:</strong> Shipping mode, scheduled shipping
+days, order type and order item quantity.
+</li>
+
+<li>
+<strong>Product and Order Features:</strong> Product category,
+department, product name, product price, discounts, discount rates
+and item price.
+</li>
+
+<li>
+<strong>Customer Features:</strong> Customer segment, customer city,
+customer state and customer country.
+</li>
+
+<li>
+<strong>Geographic Features:</strong> Order city, order state,
+order country, order region, market, latitude and longitude.
+</li>
+
+<li>
+<strong>Temporal Features:</strong> Year, month, quarter, day of
+week, week number and weekend indicator.
+</li>
+
+</ul>
+
+
+<h4>3. Late Delivery Risk Prediction</h4>
+
+<ul>
+
+<li>
+Used <strong>Late_delivery_risk</strong> as the target variable.
+</li>
+
+<li>
+1 represents a late delivery and 0 represents an on-time delivery.
+</li>
+
+<li>
+The processed data was divided into 80% training and 20% testing
+sets using stratified sampling to maintain the original class
+distribution.
+</li>
+
+</ul>
+
+
+<h3>Data Preprocessing</h3>
+
+<div class="highlight">
+
+<strong>Leakage Prevention:</strong>
+Post-outcome variables such as actual shipping duration, delivery
+status, shipping date and the target variable were excluded from the
+prediction feature set.
+
+</div>
+
+<p>
+The dataset was examined for missing values, duplicate records,
+irrelevant variables and inconsistent information before modelling.
+</p>
+
+</section>
+
+
+<!-- ALGORITHMS -->
+
+<section id="algorithms">
+
+<h2>Machine Learning Algorithms</h2>
+
+<h3>Supervised Learning</h3>
+
+
+<div class="model">
+
+<h3>Logistic Regression</h3>
+
+<p>
+<strong>Objective:</strong> Predict whether an order is likely to
+experience a late delivery based on shipping, customer, product,
+geographic and order-related characteristics.
+</p>
+
+<ul>
+
+<li>
+Used as the baseline classification model.
+</li>
+
+<li>
+Categorical features were encoded and numerical features processed
+before training.
+</li>
+
+<li>
+Generated classifications and probability estimates.
+</li>
+
+<li>
+Provided an interpretable baseline for binary classification.
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="model">
+
+<h3>Random Forest</h3>
+
+<p>
+<strong>Objective:</strong> Predict late delivery risk by capturing
+non-linear relationships and complex interactions between supply
+chain features.
+</p>
+
+<ul>
+
+<li>
+Used the same selected feature set as Logistic Regression.
+</li>
+
+<li>
+Categorical variables were encoded into numerical representations.
+</li>
+
+<li>
+Used multiple decision trees to learn patterns associated with late
+deliveries.
+</li>
+
+<li>
+Generated classifications and probability estimates.
+</li>
+
+</ul>
+
+</div>
+
+
+<div class="model">
+
+<h3>CatBoost</h3>
+
+<p>
+<strong>Objective:</strong> Develop a high-performing late delivery
+prediction model capable of effectively handling the large number of
+categorical variables present in the supply chain dataset.
+</p>
+
+<ul>
+
+<li>
+CatBoost directly handled categorical variables such as shipping
+mode, customer city, order city, product name and customer segment.
+</li>
+
+<li>
+The model was trained on the prepared training data.
+</li>
+
+<li>
+It generated late-delivery probabilities and classifications.
+</li>
+
+<li>
+CatBoost achieved the strongest performance and was selected as the
+final prediction model.
+</li>
+
+</ul>
+
+</div>
+
+
+<h3>Rationale for Model and Method Selection</h3>
+
+<h4>Logistic Regression</h4>
+
+<ul>
+
+<li><strong>Interpretability:</strong> Clear relationships between input features and late-delivery probability.</li>
+
+<li><strong>Efficiency:</strong> Computationally efficient baseline.</li>
+
+<li><strong>Probabilistic Outputs:</strong> Provides probability estimates for assessing shipment risk.</li>
+
+</ul>
+
+
+<h4>Random Forest</h4>
+
+<ul>
+
+<li><strong>Non-Linear Relationships:</strong> Captures non-linear relationships and feature interactions.</li>
+
+<li><strong>Feature Importance:</strong> Provides feature importance scores.</li>
+
+<li><strong>Robustness:</strong> Combines multiple decision trees through an ensemble structure.</li>
+
+</ul>
+
+
+<h4>CatBoost</h4>
+
+<ul>
+
+<li><strong>Categorical Data Handling:</strong> Suitable for datasets containing many categorical variables.</li>
+
+<li><strong>Non-Linear Relationships:</strong> Captures complex interactions between supply-chain features.</li>
+
+<li><strong>Performance:</strong> Produced the best results among the evaluated models.</li>
+
+<li><strong>Reduced Preprocessing:</strong> Processes categorical variables directly, reducing the need for extensive one-hot encoding.</li>
+
+</ul>
+
+</section>
+
+
+<!-- RESULTS -->
+
+<section id="results">
+
+<h2>Results and Discussion</h2>
+
+<h3>Exploratory Data Analysis — Key Drivers of Delay</h3>
+
+<p>
+<strong>Overall late-delivery rate:</strong> 54.83% of all orders in
+the dataset were late.
+</p>
+
+
+<h3>Shipping Mode</h3>
+
+<div class="chart">
+
+<div class="bar-row">
+
+<div class="bar-title">
+<span>First Class</span>
+<span>95.32%</span>
+</div>
+
+<div class="bar-background">
+<div class="bar" style="width:95.32%"></div>
+</div>
+
+</div>
+
+
+<div class="bar-row">
+
+<div class="bar-title">
+<span>Second Class</span>
+<span>76.63%</span>
+</div>
+
+<div class="bar-background">
+<div class="bar" style="width:76.63%"></div>
+</div>
+
+</div>
+
+
+<div class="bar-row">
+
+<div class="bar-title">
+<span>Same Day</span>
+<span>45.74%</span>
+</div>
+
+<div class="bar-background">
+<div class="bar" style="width:45.74%"></div>
+</div>
+
+</div>
+
+
+<div class="bar-row">
+
+<div class="bar-title">
+<span>Standard Class</span>
+<span>38.07%</span>
+</div>
+
+<div class="bar-background">
+<div class="bar" style="width:38.07%"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<p>
+Shipping mode showed the strongest observed relationship with
+late-delivery risk. First Class shipments had a 95.3% observed late
+rate, followed by Second Class at 76.6%, Same Day at 45.7%, and
+Standard Class at 38.1%.
+</p>
+
+
+<h3>Scheduled Shipping Duration</h3>
+
+<p>
+Scheduled shipping duration followed a similar pattern. A one-day
+scheduled window showed a 95.3% observed late rate compared with
+38.1% for a four-day window.
+</p>
+
+
+<h3>Market and Customer Segment</h3>
+
+<p>
+Market and Customer Segment showed relatively modest variation.
+Late-delivery risk ranged from approximately 54.4% to 55.2% across
+markets and from approximately 54.7% to 55.1% across customer
+segments.
+</p>
+
+
+<h3>Supervised Learning Performance Metrics</h3>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Metric</th>
+<th>Logistic Regression</th>
+<th>Random Forest</th>
+<th>CatBoost (Final)</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Accuracy</td>
+<td>71.16%</td>
+<td>69.22%</td>
+<td class="best">92.03%</td>
+</tr>
+
+<tr>
+<td>Precision</td>
+<td>78.26%</td>
+<td>79.72%</td>
+<td class="best">95.37%</td>
+</tr>
+
+<tr>
+<td>Recall</td>
+<td>65.64%</td>
+<td>58.81%</td>
+<td class="best">89.83%</td>
+</tr>
+
+<tr>
+<td>F1 Score</td>
+<td>71.40%</td>
+<td>67.69%</td>
+<td class="best">92.51%</td>
+</tr>
+
+<tr>
+<td>ROC-AUC</td>
+<td>77.91%</td>
+<td>76.30%</td>
+<td class="best">98.21%</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<div class="highlight">
+
+<strong>CatBoost decisively outperformed both baselines across every
+reported metric.</strong>
+
+</div>
+
+
+<p>
+The Logistic Regression baseline achieved 71.16% accuracy and a
+77.91% ROC-AUC. Random Forest achieved 69.22% accuracy and a
+76.30% ROC-AUC.
+</p>
+
+<p>
+CatBoost achieved 92.03% accuracy, 95.37% precision, 89.83% recall,
+92.51% F1 score and 98.21% ROC-AUC on the stratified held-out test
+set.
+</p>
+
+
+<h3>Why CatBoost Performed Better</h3>
+
+<p>
+Random Forest required one-hot encoding, expanding the categorical
+feature space to approximately 5,041 columns. CatBoost's native
+handling of categorical fields allowed it to exploit high-cardinality
+features such as Customer City and Order City more effectively.
+</p>
+
+</section>
+
+
+<!-- CONFUSION MATRIX -->
+
+<section>
+
+<h2>Confusion Matrix — CatBoost</h2>
+
+<p>
+The final test set contained <strong>36,104 orders</strong>.
+</p>
+
+<table>
+
+<thead>
+
+<tr>
+<th></th>
+<th>Predicted On Time</th>
+<th>Predicted Late</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<th>Actual On Time</th>
+<td>15,444</td>
+<td>864</td>
+</tr>
+
+<tr>
+<th>Actual Late</th>
+<td>2,014</td>
+<td>17,782</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<p>
+The model correctly identified 17,782 of 19,796 truly late orders,
+corresponding to approximately 89.8% recall.
+</p>
+
+<p>
+There were 864 on-time orders incorrectly flagged as late.
+</p>
+
+</section>
+
+
+<!-- SHAP -->
+
+<section id="shap">
+
+<h2>Feature Importance & SHAP Explainability</h2>
+
+<p>
+SHAP was used to explain predictions generated by the final CatBoost
+model and identify the factors contributing to delivery risk.
+</p>
+
+
+<h3>Global Explanation</h3>
+
+<p>
+Mean absolute SHAP values were calculated to identify the most
+influential features across a representative sample of the dataset.
+</p>
+
+
+<table>
+
+<thead>
+
+<tr>
+<th>Rank</th>
+<th>Feature</th>
+<th>Mean |SHAP|</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>1</td>
+<td>Shipping Mode</td>
+<td class="best">1.27</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Order City</td>
+<td class="best">0.91</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Customer City</td>
+<td class="best">0.77</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Type</td>
+<td class="best">0.70</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Customer Segment</td>
+<td>0.34</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Days for shipment (scheduled)</td>
+<td>0.11</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<h3>CatBoost Feature Importance</h3>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Rank</th>
+<th>Feature</th>
+<th>Importance</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>1</td>
+<td>Shipping Mode</td>
+<td>32.17%</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Type</td>
+<td>17.33%</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Customer City</td>
+<td>13.26%</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Order City</td>
+<td>12.90%</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Customer Segment</td>
+<td>3.35%</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Days for shipment (scheduled)</td>
+<td>5.92%</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<h3>Individual Explanation</h3>
+
+<p>
+At the individual-order level, SHAP waterfall explanations allow
+the model to justify a specific prediction feature-by-feature.
+</p>
+
+<p>
+For example, one sampled test order was predicted to have a
+<strong>59.4% probability of being late</strong>, corresponding to
+the <strong>MEDIUM</strong> risk tier.
+</p>
+
+<p>
+The prediction was primarily influenced by a negative
+risk-reducing contribution from its Standard Class shipping mode
+(SHAP -0.90), partially offset by positive contributions from
+customer-state and order-region values.
+</p>
+
+
+<div class="highlight">
+
+<strong>Interpretability:</strong>
+SHAP makes it possible to audit individual predictions instead of
+treating the machine learning model as a black box.
+
+</div>
+
+</section>
+
+
+<!-- RISK -->
+
+<section id="risk">
+
+<h2>Shipment Risk Prioritization</h2>
+
+<p>
+The CatBoost probability output can be converted into an actionable
+risk tier for prioritizing shipments.
+</p>
+
+
+<div class="risk-container">
+
+<div class="risk">
+<div class="risk-icon">🟢</div>
+<strong>LOW</strong>
+<p>Late probability<br><strong>&lt; 30%</strong></p>
+</div>
+
+<div class="risk">
+<div class="risk-icon">🟡</div>
+<strong>MEDIUM</strong>
+<p>Late probability<br><strong>30% – 60%</strong></p>
+</div>
+
+<div class="risk">
+<div class="risk-icon">🟠</div>
+<strong>HIGH</strong>
+<p>Late probability<br><strong>60% – 80%</strong></p>
+</div>
+
+<div class="risk">
+<div class="risk-icon">🔴</div>
+<strong>CRITICAL</strong>
+<p>Late probability<br><strong>≥ 80%</strong></p>
+</div>
+
+</div>
+
+
+<h3>Prediction Workflow</h3>
+
+<div class="workflow">
+
+New Order
+    ↓
+28 Prediction-Time Features
+    ↓
+CatBoost Model
+    ↓
+Late-Delivery Probability
+    ↓
+Risk Tier
+    ↓
+SHAP Explanation
+    ↓
+Logistics Decision Support
+
+</div>
+
+
+<p>
+The reusable prediction system accepts a new order's 28 prediction-time
+features and returns a probability, risk tier and SHAP-ranked factors
+behind the prediction.
+</p>
+
+</section>
+
+
+<!-- CONCLUSION -->
+
+<section id="conclusion">
+
+<h2>Conclusion</h2>
+
+<p>
+The implemented solution combines data processing, feature
+engineering and supervised learning to analyse and predict delivery
+performance using historical supply chain data.
+</p>
+
+<p>
+By using relevant shipping, customer, product, geographic and
+temporal features, the analysis identifies patterns associated with
+late delivery risk.
+</p>
+
+<p>
+Logistic Regression served as a reliable baseline, while Random
+Forest was used to capture non-linear relationships and complex
+feature interactions.
+</p>
+
+<p>
+CatBoost demonstrated superior performance by effectively handling
+the large number of categorical features present in the dataset.
+</p>
+
+<div class="highlight">
+
+<strong>Final Model Performance</strong><br><br>
+
+Accuracy: <strong>92.03%</strong><br>
+Precision: <strong>95.37%</strong><br>
+Recall: <strong>89.83%</strong><br>
+F1 Score: <strong>92.51%</strong><br>
+ROC-AUC: <strong>98.21%</strong>
+
+</div>
+
+<p>
+SHAP explainability further provides insight into the factors
+contributing to individual delivery-risk predictions, helping
+transform the model from a purely predictive system into an
+interpretable decision-support prototype.
+</p>
+
+</section>
+
+
+<!-- RESULTS DISCUSSION -->
+
+<section>
+
+<h2>Results and Discussions</h2>
+
+<h3>Supervised Learning Quantitative Metrics</h3>
+
+<ol>
+
+<li>
+<strong>Accuracy:</strong> The CatBoost model achieved an accuracy
+of 92.03%, indicating strong overall performance on the held-out
+test set.
+</li>
+
+<li>
+<strong>Precision:</strong> The precision of 95.37% indicates that
+most orders predicted as late were actually late.
+</li>
+
+<li>
+<strong>Recall:</strong> A recall of 89.83% indicates that the model
+identified a large proportion of the actual late deliveries.
+</li>
+
+<li>
+<strong>F1 Score:</strong> An F1 score of 92.51% demonstrates a
+strong balance between precision and recall.
+</li>
+
+<li>
+<strong>ROC-AUC:</strong> The CatBoost model achieved a 98.21%
+ROC-AUC, indicating strong discrimination between late and on-time
+deliveries on the held-out test set.
+</li>
+
+</ol>
+
+</section>
+
+
+<!-- GOALS -->
+
+<section>
+
+<h2>Project Goals</h2>
+
+<p>
+The project aims to predict late deliveries in supply chain
+operations using historical order, shipping, customer, product,
+geographic and temporal information.
+</p>
+
+<p>
+It also aims to identify factors contributing to delivery risk and
+provide explainable, data-driven insights to reduce subjective
+decision-making and improve logistics planning.
+</p>
+
+<h3>Expected / Intended Outcomes</h3>
+
+<ul>
+
+<li>
+Identify high-risk orders and patterns associated with late
+deliveries.
+</li>
+
+<li>
+Provide insights that can support shipment planning and operational
+strategies.
+</li>
+
+<li>
+Generate late-delivery probabilities and risk classifications for
+individual orders.
+</li>
+
+<li>
+Use SHAP-based explainability to reveal the key factors influencing
+predictions.
+</li>
+
+</ul>
+
+</section>
+
+
+<!-- REFERENCES -->
+
+<section id="references">
+
+<h2>References</h2>
+
+
+<div class="reference">
+
+<strong>1.</strong>
+DataCo Global, “DataCo SMART SUPPLY CHAIN FOR BIG DATA ANALYSIS,”
+Mendeley Data, 2019.
+DOI: 10.17632/8gx2fvg2k6.5.
+</div>
+
+
+<div class="reference">
+
+<strong>2.</strong>
+L. Prokhorenkova, G. Gusev, A. Vorobev, A. V. Dorogush and A.
+Gulin, “CatBoost: Unbiased Boosting with Categorical Features,”
+Advances in Neural Information Processing Systems (NeurIPS),
+vol. 31, 2018.
+</div>
+
+
+<div class="reference">
+
+<strong>3.</strong>
+S. M. Lundberg and S.-I. Lee, “A Unified Approach to Interpreting
+Model Predictions,” Advances in Neural Information Processing
+Systems (NeurIPS), vol. 30, pp. 4765–4774, 2017.
+</div>
+
+
+<div class="reference">
+
+<strong>4.</strong>
+A. V. Dorogush, V. Ershov and A. Gulin, “CatBoost: Gradient
+Boosting with Categorical Features Support,” arXiv:1810.11363,
+2018.
+</div>
+
+
+<div class="reference">
+
+<strong>5.</strong>
+“DataCo SMART SUPPLY CHAIN FOR BIG DATA ANALYSIS,” dataset
+documentation describing variables related to shipping duration,
+scheduled delivery, delivery status and late-delivery risk.
+</div>
+
+</section>
+
+
+</div>
+
+
+<footer>
+
+<p>
+<strong>🚚 Supply Chain Delay Prediction & Logistics Risk Intelligence</strong>
+</p>
+
+<p>
+Machine Learning · CatBoost · SHAP · Explainable AI
+</p>
+
+</footer>
+
+</body>
+</html>
